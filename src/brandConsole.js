@@ -63,9 +63,6 @@ const Console = ({ theme }) => {
       <a rel='noopener noreferrer' target='_blank' href='https://github.com/spreadpando/'>
         <BrandIcon src={theme.icons.github} />
       </a>
-      <a rel='noopener noreferrer' target='_blank' href='https://github.com/spreadpando/'>
-        <BrandIcon src={theme.icons.soundcloud} />
-      </a>
     </>
   )
 }

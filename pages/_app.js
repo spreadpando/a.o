@@ -1,11 +1,13 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { motion, useAnimation } from 'framer-motion'
 import styled, { ThemeProvider } from 'styled-components'
 import GlobalStyle from '../theme/globalStyle'
 import theme1 from '../theme/theme1'
 import Console from '../src/brandConsole'
+import Player from '../src/player'
 
 const theme = theme1
 const AppContainer = styled('div')`
@@ -21,6 +23,7 @@ const Brand = styled(motion.h1)`
   left: calc(50% - 7rem);
   width: 14rem;
   text-align: center;
+  cursor: pointer;
 `
 
 const BrandConsole = styled(motion.div)`
@@ -31,10 +34,31 @@ const BrandConsole = styled(motion.div)`
   text-align: center;
 `
 
+const PlayBar = styled('div')`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+`
+
 const app = ({ Component, pageProps }) => {
   const router = useRouter()
   const brandControls = useAnimation()
   const consoleControls = useAnimation()
+  const [isPlaying, setIsPlaying] = useState(false)
+
+  const setAudioSrc = (track) => {
+    document.querySelector('#app-audio').setAttribute('src', `/api/tracks/${track}`)
+  }
+
+  const Play = () => {
+    document.querySelector('#app-audio').play()
+    setIsPlaying(true)
+  }
+
+  const Pause = () => {
+    document.querySelector('#app-audio').pause()
+    setIsPlaying(false)
+  }
 
   useEffect(() => {
     const handleRouteChange = (url) => {
@@ -122,23 +146,30 @@ const app = ({ Component, pageProps }) => {
         />
       </Head>
       <AppContainer>
-        <Brand
-          key='brand'
-          animate={brandControls}
-          transition={{ duration: 1.5 }}
+        <Link href='/'>
+          <Brand
+            key='brand'
+            animate={brandControls}
+            transition={{ duration: 1.5 }}
 
-        >
+          >
           APHYYD
-        </Brand>
+          </Brand>
+        </Link>
         <BrandConsole
           key='console'
           initial={{ opacity: 0 }}
           animate={consoleControls}
           transition={{ duration: 1.5 }}
+          transitionEnd={{ display: 'none' }}
+
         >
           <Console theme={theme} />
         </BrandConsole>
-        <Component {...pageProps} theme={theme} />
+        <PlayBar>
+          <Player isPlaying={isPlaying} play={Play} pause={Pause} />
+        </PlayBar>
+        <Component isPlaying={isPlaying} play={Play} pause={Pause} setAudioSrc={setAudioSrc} theme={theme} {...pageProps} />
         <GlobalStyle theme={theme} />
       </AppContainer>
     </ThemeProvider>
