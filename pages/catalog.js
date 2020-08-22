@@ -31,13 +31,12 @@ const Catalog = ({ setAudioSrc, isPlaying, play, pause, theme }) => {
       case true:
         target.textContent = 'play_arrow'
         document.querySelector('#app-play-btn').textContent = 'play_arrow'
-        setAudioSrc(track)
         pause()
         break
       case false:
         target.textContent = 'pause_circle_outline'
         document.querySelector('#app-play-btn').textContent = 'pause_circle_outline'
-
+        setAudioSrc(track)
         play()
         break
     }

@@ -68,7 +68,8 @@ const app = ({ Component, pageProps }) => {
         })
         consoleControls.start({
           opacity: 0,
-          top: '85%'
+          top: '85%',
+          transitionEnd: { display: 'none' }
         })
       }
       if (url === '/') {
@@ -77,7 +78,9 @@ const app = ({ Component, pageProps }) => {
         })
         consoleControls.start({
           opacity: 1,
-          top: 'calc(50% - 2rem)'
+          top: 'calc(50% - 2rem)',
+          transitionEnd: { display: 'block' }
+
         })
       }
     }
@@ -161,7 +164,6 @@ const app = ({ Component, pageProps }) => {
           initial={{ opacity: 0 }}
           animate={consoleControls}
           transition={{ duration: 1.5 }}
-          transitionEnd={{ display: 'none' }}
 
         >
           <Console theme={theme} />
