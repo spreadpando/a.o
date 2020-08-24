@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
-const cat = ['raven.mp3', 'raven.mp3', 'raven.mp3', 'raven.mp3', 'raven.mp3', 'raven.mp3', 'raven.mp3', 'raven.mp3', 'raven.mp3']
+const cat = [{ artist: 'aphyyd', track: 'raven.mp3' }]
 const TrackList = styled('ul')`
   margin: 5rem 0;
   width: 100%;
@@ -53,7 +53,8 @@ const Catalog = ({ setAudioSrc, isPlaying, play, pause, theme }) => {
           return (
             <li key={index}>
               <hr />
-              <span>{track}</span>
+              <span>{track.artist}</span>
+              <span>{track.track}</span>
               <span className='play-btn material-icons-outlined' onClick={(e) => { toggleIcon(e.target, track) }}>play_arrow</span>
             </li>
           )

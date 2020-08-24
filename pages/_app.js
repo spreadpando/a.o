@@ -47,7 +47,9 @@ const app = ({ Component, pageProps }) => {
   const [isPlaying, setIsPlaying] = useState(false)
 
   const setAudioSrc = (track) => {
-    document.querySelector('#app-audio').setAttribute('src', `/api/tracks/${track}`)
+    const artist = track.artist
+    const trackName = track.track
+    document.querySelector('#app-audio').setAttribute('src', `/api/tracks/${artist}+${trackName}`)
   }
 
   const Play = () => {

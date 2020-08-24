@@ -2,16 +2,15 @@ import aws, { config } from 'aws-sdk'
 
 export default async (req, res) => {
     const {
-        query: { tid },
+        query: { aid },
         } = req
-    const trackMetaData = tid.split('+')
     try {
         const s3 = new aws.S3({endpoint:'nyc3.digitaloceanspaces.com'});
-        const response = await s3.getObject({
+        const response = await s3.listObjectsV2({
             Bucket: 'data-pando-systems',
-            Key: `tracks/${trackMetaData[0]}/${trackMetaData[1]}`
+            Prefix: `tracks/${aid}/`
         }).promise()
-        res.send(response.Body)
+        res.send(response.Contents)
     } catch (e) {
         console.log('our error', e)
     }
